@@ -1,0 +1,8 @@
+:HarnessLensRefresh	harness-lens.txt	/*:HarnessLensRefresh*
+:HarnessLensRestart	harness-lens.txt	/*:HarnessLensRestart*
+:HarnessLensStart	harness-lens.txt	/*:HarnessLensStart*
+harness-lens-commands	harness-lens.txt	/*harness-lens-commands*
+harness-lens-introduction	harness-lens.txt	/*harness-lens-introduction*
+harness-lens-setup	harness-lens.txt	/*harness-lens-setup*
+harness-lens.nvim	harness-lens.txt	/*harness-lens.nvim*
+harness-lens.txt	harness-lens.txt	/*harness-lens.txt*

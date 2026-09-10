@@ -1,0 +1,41 @@
+# SPDX-License-Identifier: MPL-2.0
+# Copyright © 2026 Cristian Camargo Filho
+
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Neovim ${{ matrix.neovim }}
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - neovim: 0.10.4
+            sha256: 95aaa8e89473f5421114f2787c13ae0ec6e11ebbd1a13a1bd6fcf63420f8073f
+          - neovim: 0.12.5
+            sha256: bce0f56eda1f1b1db6eee8f4133d7a38813ea07933837dd1777411ca384c6875
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Install verified Neovim
+        run: |
+          curl --fail --location --retry 3 \
+            --output "${{ runner.temp }}/nvim-linux-x86_64.tar.gz" \
+            "https://github.com/neovim/neovim/releases/download/v${{ matrix.neovim }}/nvim-linux-x86_64.tar.gz"
+          echo "${{ matrix.sha256 }}  ${{ runner.temp }}/nvim-linux-x86_64.tar.gz" | sha256sum --check --strict
+          tar -xzf "${{ runner.temp }}/nvim-linux-x86_64.tar.gz" -C "${{ runner.temp }}"
+      - name: Check whitespace
+        run: git diff --check
+      - name: Run headless tests
+        run: >-
+          make test
+          NVIM="${{ runner.temp }}/nvim-linux-x86_64/bin/nvim"

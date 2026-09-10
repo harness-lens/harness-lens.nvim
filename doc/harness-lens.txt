@@ -1,0 +1,56 @@
+*harness-lens.txt*                     Harness Lens adapter for Neovim/LazyVim
+
+==============================================================================
+CONTENTS                                                     *harness-lens.nvim*
+
+1. Introduction                                      |harness-lens-introduction|
+2. Setup                                                    |harness-lens-setup|
+3. Commands                                              |harness-lens-commands|
+
+==============================================================================
+1. Introduction                                      *harness-lens-introduction*
+
+harness-lens.nvim recognizes coding-agent harness files and starts the
+editor-neutral harness-lens-lsp process. Analysis stays in Harness Lens Core,
+the SDK, and the language server. The Lua adapter does not download binaries,
+copy validation rules, or send source to a network service.
+
+Requires Neovim 0.10 or newer and harness-lens-lsp on PATH unless `cmd` is set.
+
+==============================================================================
+2. Setup                                                    *harness-lens-setup*
+
+Minimal setup: >lua
+  require("harness-lens").setup()
+<
+
+Selected options: >lua
+  require("harness-lens").setup({
+    cmd = { "harness-lens-lsp" },
+    root_markers = { "harness-lens.toml", ".git" },
+    file_names = { "AGENTS.md", "CLAUDE.md", "GEMINI.md" },
+    runtime_metrics = true,
+    code_lens = true,
+    lsp = {},
+  })
+<
+
+List options replace their defaults. See README.md for the complete option
+table and LazyVim installation example.
+
+==============================================================================
+3. Commands                                              *harness-lens-commands*
+
+                                              *:HarnessLensStart*
+:HarnessLensStart
+    Start or reuse Harness Lens for the current recognized buffer.
+
+                                              *:HarnessLensRestart*
+:HarnessLensRestart
+    Restart the Harness Lens server attached to the current workspace.
+
+                                              *:HarnessLensRefresh*
+:HarnessLensRefresh
+    Request a new optional CodeBurn snapshot from the language server.
+
+vim:tw=78:ts=8:noet:ft=help:norl:
