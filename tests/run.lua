@@ -67,7 +67,7 @@ test("starts the server at the nearest configured root", function()
     captured = { config = config, options = options }
     return 42
   end
-  harness_lens.setup({ autostart = false, cmd = { "nvim", "--headless" } })
+  harness_lens.setup({ autostart = false, cmd = { vim.v.progpath, "--headless" } })
   local client_id = harness_lens.start(bufnr)
   vim.lsp.start = original_start
 
